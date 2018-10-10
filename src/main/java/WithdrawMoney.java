@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,8 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DepositMoney implements ActionListener{
-	
+public class WithdrawMoney implements ActionListener {
 	TextField submit;
 	TextField accountNo;
 	TextField balance;
@@ -15,7 +15,7 @@ public class DepositMoney implements ActionListener{
 	Statement stmt = null; 
 	
 	
-	public DepositMoney(TextField f, TextField account, TextField bal)
+	public WithdrawMoney(TextField f, TextField account, TextField bal)
 	{
 		submit=f;
 		accountNo = account; 
@@ -39,11 +39,11 @@ public class DepositMoney implements ActionListener{
 			int acc = Integer.parseInt(accountNo.getText());
 			System.out.println(accountNo.getText());
 			System.out.println(money);
-			String putDeposit = "insert into deposit values("+ acc + ", " + money +", '24/03/2018')"; 
-
 			
-			stmt.executeUpdate(putDeposit);
-			System.out.println("trying to deposit");
+			String putWith = "insert into withdraws values("+ acc + ", " + money +", '24/03/2018')"; 
+			stmt.executeUpdate(putWith);
+			
+			System.out.println("trying to add to withdraw");
 			
 			String getDeposit = "Select * from deposit where AcNo = " + acc;
 			stmt = conn.createStatement();
@@ -71,10 +71,21 @@ public class DepositMoney implements ActionListener{
 				System.out.println("Amount Deposited Previously: " + with);
 			}
 			
+			if (totalDeposits < totalWithdraws)
+			{
+				balance.setText("FUNDS NOT AVAILABLE");
+				balance.setBackground(Color.RED);
+				//balance.setEnabled(false);
+			}
+			
+			else
+			{
 			int balan = totalDeposits - totalWithdraws;
 			System.out.println("balance: " + balan);
 			String bal = String.valueOf(balan);
 			balance.setText(bal);
+			}
+			
 			stmt.close();
 			conn.close();
 			
@@ -83,5 +94,4 @@ public class DepositMoney implements ActionListener{
 		
 		submit.setText(null);
 	}
-
 }

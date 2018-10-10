@@ -7,8 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DepositPageEvent implements ActionListener{
-	
+public class WithdrawPageEvent implements ActionListener{
+
 	Connection conn = null; 
 	Statement stmt = null; 
 	Statement stat = null;
@@ -21,7 +21,7 @@ public class DepositPageEvent implements ActionListener{
 	TextField enterAmount; 
 	Button enterAmountOk; 
 	
-	public DepositPageEvent(TextField account,TextField nom, TextField add,TextField bal, 
+	public WithdrawPageEvent(TextField account,TextField nom, TextField add,TextField bal, 
 	TextField enter,Button ent)
 	{
 		accountNom = account;
@@ -97,10 +97,8 @@ public class DepositPageEvent implements ActionListener{
 			String bal = String.valueOf(balan);
 			balance.setText(bal);
 			
-			
-			
 			//When clicking the button it will deposit the money
-			DepositMoney money = new DepositMoney(enterAmount, accountNom, balance);
+			WithdrawMoney money = new WithdrawMoney(enterAmount, accountNom, balance);
 			enterAmountOk.addActionListener(money);
 						
 			rs.close();

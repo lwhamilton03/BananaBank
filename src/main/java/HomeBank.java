@@ -35,5 +35,7 @@ public class HomeBank {
 		DepositPage deposit = new DepositPage(); 
 		depositeMoney.addActionListener(deposit); 
 		
+		WithdrawPage with = new WithdrawPage(); 
+		withdrawMoney.addActionListener(with);
 	}
 }
