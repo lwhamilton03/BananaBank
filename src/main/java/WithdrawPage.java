@@ -13,6 +13,13 @@ import java.awt.event.ActionListener;
 public class WithdrawPage implements ActionListener {
 	
 	Button sub; 
+	Frame home; 
+	
+	public WithdrawPage(Frame f)
+	{
+		home = f;
+	}
+	
 	public void actionPerformed(ActionEvent events)
 	{
 		Frame A = new Frame("depositAccount");
@@ -37,7 +44,7 @@ public class WithdrawPage implements ActionListener {
 		A.add(p, BorderLayout.NORTH);
 		
 		Panel acc = new Panel();
-		GridLayout gri = new GridLayout(4,2);
+		GridLayout gri = new GridLayout(5,2);
 		acc.setLayout(gri);
 		A.add(acc, BorderLayout.CENTER);
 		
@@ -77,6 +84,12 @@ public class WithdrawPage implements ActionListener {
 		butt.setBackground(Color.ORANGE);
 		A.add(butt, BorderLayout.SOUTH);
 		
+		Button backTo = new Button("Return To Home Page"); 
+		backTo.setBackground(Color.GREEN);
+		acc.add(backTo,  BorderLayout.CENTER);
+		
+		ReturnButton returnTo = new ReturnButton(home, A);
+		backTo.addActionListener(returnTo);
 		WithdrawPageEvent eventss = new WithdrawPageEvent(input, nom, add, retu, re, butt);
 		submit.addActionListener(eventss);
 	}

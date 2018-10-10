@@ -20,13 +20,14 @@ public class CreateAccount implements ActionListener {
 	
 	public void actionPerformed(ActionEvent event)
 	{
-		home.setVisible(false);
+		
 		Frame A = new Frame("createAccount");
 		A.setVisible(true);
 		A.setSize(600, 600);
+		home.setVisible(false);
 		
 		Panel acc = new Panel();
-		GridLayout gri = new GridLayout(3,2);
+		GridLayout gri = new GridLayout(4,2);
 		acc.setLayout(gri);
 		A.add(acc, BorderLayout.CENTER);
 		
@@ -57,6 +58,16 @@ public class CreateAccount implements ActionListener {
 		Button butt = new Button("SUBMIT");
 		butt.setBackground(Color.ORANGE);
 		A.add(butt, BorderLayout.SOUTH);
+		
+		//Panel back = new Panel();
+		Button backTo = new Button("Return To Home Page"); 
+		backTo.setBackground(Color.GREEN);
+		acc.add(backTo,  BorderLayout.CENTER);
+		
+		ReturnButton returnTo = new ReturnButton(home, A);
+		backTo.addActionListener(returnTo);
+		
+		//A.add(back, BorderLayout.SOUTH);
 		
 		CreateAccountEvent cree = new CreateAccountEvent(nom, add, retu, butt); 
 		butt.addActionListener(cree);

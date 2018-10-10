@@ -32,10 +32,10 @@ public class HomeBank {
 		CreateAccount create = new CreateAccount(F);
 		createAccount.addActionListener(create);
 		
-		DepositPage deposit = new DepositPage(); 
+		DepositPage deposit = new DepositPage(F); 
 		depositeMoney.addActionListener(deposit); 
 		
-		WithdrawPage with = new WithdrawPage(); 
+		WithdrawPage with = new WithdrawPage(F); 
 		withdrawMoney.addActionListener(with);
 	}
 }
