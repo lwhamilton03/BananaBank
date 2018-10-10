@@ -58,6 +58,9 @@ public class CreateAccount implements ActionListener {
 		butt.setBackground(Color.ORANGE);
 		A.add(butt, BorderLayout.SOUTH);
 		
+		CreateAccountEvent cree = new CreateAccountEvent(nom, add, retu, butt); 
+		butt.addActionListener(cree);
+		
 		
 	}
 }

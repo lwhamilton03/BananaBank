@@ -40,16 +40,18 @@ public class WithdrawMoney implements ActionListener {
 			System.out.println(accountNo.getText());
 			System.out.println(money);
 			
+			//IF BALANCE OF THE MONEY AND TEXT BOX THEN CHANGE 
+			if(money <= Integer.parseInt(balance.getText()))
+			{
+			
 			String putWith = "insert into withdraws values("+ acc + ", " + money +", '24/03/2018')"; 
 			stmt.executeUpdate(putWith);
 			
-			System.out.println("trying to add to withdraw");
 			
 			String getDeposit = "Select * from deposit where AcNo = " + acc;
 			stmt = conn.createStatement();
 			ResultSet rd = stmt.executeQuery(getDeposit); 
 			int totalDeposits = 0;
-			
 			while(rd.next())
 			{
 				int amountss = rd.getInt("Amount");
@@ -71,20 +73,18 @@ public class WithdrawMoney implements ActionListener {
 				System.out.println("Amount Deposited Previously: " + with);
 			}
 			
-			if (totalDeposits < totalWithdraws)
+			int balan = totalDeposits - totalWithdraws;
+			System.out.println("balance: " + balan);
+			String bal = String.valueOf(balan);
+			balance.setText(bal);
+			}
+			else 
 			{
 				balance.setText("FUNDS NOT AVAILABLE");
 				balance.setBackground(Color.RED);
 				//balance.setEnabled(false);
 			}
 			
-			else
-			{
-			int balan = totalDeposits - totalWithdraws;
-			System.out.println("balance: " + balan);
-			String bal = String.valueOf(balan);
-			balance.setText(bal);
-			}
 			
 			stmt.close();
 			conn.close();
