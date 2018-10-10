@@ -24,6 +24,7 @@ public class DepositPage implements ActionListener {
 		Frame A = new Frame("depositAccount");
 		A.setVisible(true);
 		A.setSize(300, 300);
+		home.setVisible(false);
 		
 		Panel p = new Panel(); 
 		FlowLayout flow = new FlowLayout(); 

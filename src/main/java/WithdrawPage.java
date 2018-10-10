@@ -22,9 +22,10 @@ public class WithdrawPage implements ActionListener {
 	
 	public void actionPerformed(ActionEvent events)
 	{
-		Frame A = new Frame("depositAccount");
+		Frame A = new Frame("Withdraw Account");
 		A.setVisible(true);
 		A.setSize(300, 300);
+		home.setVisible(false);
 		
 		Panel p = new Panel(); 
 		FlowLayout flow = new FlowLayout(); 
