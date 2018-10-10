@@ -23,7 +23,7 @@ public class DepositPage implements ActionListener {
 	{
 		Frame A = new Frame("depositAccount");
 		A.setVisible(true);
-		A.setSize(600, 600);
+		A.setSize(300, 300);
 		
 		Panel p = new Panel(); 
 		FlowLayout flow = new FlowLayout(); 
@@ -31,12 +31,13 @@ public class DepositPage implements ActionListener {
 		p.setLayout(flow);
 		
 		
-		Label accountN = new Label("Enter Account No: "); 
+		Label accountN = new Label("Enter AcNo: "); 
 		p.add(accountN);
 		
 		//NEEDS TO CHANGE BY IMPLEMENTING IT ELSE WHERE
 		final TextField input = new TextField();
 		p.add(input);
+		input.setColumns(9);
 		
 		Button submit = new Button("Submit AcNo");
 		p.add(submit);

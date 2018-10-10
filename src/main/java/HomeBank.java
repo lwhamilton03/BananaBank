@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -15,11 +16,12 @@ public class HomeBank {
 	{
 		F = new Frame("BANANA BANK"); 
 		F.setVisible(true);
-		F.setSize(600,600);
+		F.setSize(300,300);
 	
 		Panel titleHeader = new Panel(); 
 		Label title = new Label("BANANA BANK"); 
 		titleHeader.setBackground(Color.PINK);
+		titleHeader.setFont(new Font("Head", Font.BOLD, 24));
 		titleHeader.add(title);
 		F.add(titleHeader, BorderLayout.NORTH);
 		
@@ -28,8 +30,7 @@ public class HomeBank {
 		GridLayout grid = new GridLayout(4,1);
 		homePage.setLayout(grid);
 		F.add(homePage, BorderLayout.CENTER); 
-		
-	
+			
 		
 		Button createAccount = new Button ("Create Account");
 		createAccount.setBackground(Color.lightGray);
@@ -43,7 +44,8 @@ public class HomeBank {
 			
 			public void actionPerformed(ActionEvent eee)
 			{
-				F.setVisible(false);
+				//Stops the system from running
+				System.exit(0);
 			}
 		});
 		

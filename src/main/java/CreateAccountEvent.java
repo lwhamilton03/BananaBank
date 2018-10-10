@@ -1,5 +1,8 @@
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Frame;
+import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,12 +14,13 @@ import java.sql.Statement;
 public class CreateAccountEvent implements ActionListener{
 	TextField nom;
 	TextField addresss;
-	TextField acNo; 
+	Label acNo; 
 	Button sub; 
 	Connection conn = null; 
 	Statement stmt = null; 
+	Frame error; 
 	
-	public CreateAccountEvent(TextField nom, TextField addresss, TextField acNo, Button sub)
+	public CreateAccountEvent(TextField nom, TextField addresss, Label acNo, Button sub)
 	{
 		this.nom = nom; 
 		this.addresss = addresss;
@@ -26,9 +30,60 @@ public class CreateAccountEvent implements ActionListener{
 
 	public void actionPerformed(ActionEvent act)
 	{
+		//sub.setEnabled(true);
 		String name = nom.getText();
 		String address = addresss.getText();
+		String erMessage = "";
+		error = new Frame("Needs More Info");
+		error.setSize(200, 200);
+		Button ok = new Button("OK"); 
+		Label errorMessage = new Label(erMessage);
+		error.add(ok, BorderLayout.SOUTH);
+		error.add(errorMessage, BorderLayout.CENTER);
 		
+		if(name.equals("") && address.equals(""))
+		{ 
+			erMessage = "Please Fill In the Name and Address Field";
+			errorMessage.setText(erMessage);
+			error.setVisible(true);
+			ok.addActionListener(new ActionListener() 
+			{
+				public void actionPerformed(ActionEvent tee)
+				{
+					error.setVisible(false);
+				}
+			});}
+		
+			else if(name.equals(""))
+			{ 
+				erMessage = "Please Fill In the Name Field";
+				errorMessage.setText(erMessage);
+				error.setVisible(true);
+				ok.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent tee)
+					{
+						error.setVisible(false);
+					}
+				});}
+		
+			else if(address.equals(""))
+				{ 
+					erMessage = "Please Fill In the Address Field";
+					errorMessage.setText(erMessage);
+					error.setVisible(true);
+					ok.addActionListener(new ActionListener() 
+					{
+						public void actionPerformed(ActionEvent tee)
+						{
+							error.setVisible(false);
+						}
+					});
+					
+				
+			//sub.setEnabled(false);
+		}
+		else {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
@@ -57,5 +112,5 @@ public class CreateAccountEvent implements ActionListener{
 			
 			
 		}catch(Exception se) {}
-	}
+	}}
 }

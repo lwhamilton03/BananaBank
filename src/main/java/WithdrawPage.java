@@ -24,7 +24,7 @@ public class WithdrawPage implements ActionListener {
 	{
 		Frame A = new Frame("depositAccount");
 		A.setVisible(true);
-		A.setSize(600, 600);
+		A.setSize(300, 300);
 		
 		Panel p = new Panel(); 
 		FlowLayout flow = new FlowLayout(); 
