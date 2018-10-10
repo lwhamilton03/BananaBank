@@ -1,4 +1,9 @@
+import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +25,8 @@ public class DepositPageEvent implements ActionListener{
 	TextField balance; 
 	TextField enterAmount; 
 	Button enterAmountOk; 
+	Frame error; 
+	String erMessage = "";
 	
 	public DepositPageEvent(TextField account,TextField nom, TextField add,TextField bal, 
 	TextField enter,Button ent)
@@ -32,27 +39,63 @@ public class DepositPageEvent implements ActionListener{
 		enterAmountOk = ent;
 	}
 	
-	public void actionPerformed(ActionEvent event)
+	public boolean checkAccount(TextField accountNo)
 	{
-	
-		//NAME AND ADDRESS FROM THE ACCOUT NUM
+		boolean result = false;
+		int check = Integer.parseInt(accountNo.getText());
+		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "password");
 			stmt = conn.createStatement();
 			
+			String getAccount = "SELECT * from account";
+			ResultSet ra = stmt.executeQuery(getAccount); 
+			
+			while(ra.next())
+			{
+				int idd = ra.getInt(1);
+				if(check == idd)
+				{
+					result = true;
+				}
+			}
+			
+			stmt.close();
+			conn.close();
+			
+		}catch(Exception se) {}
+				
+		return result;
+	}
+	
+	public void actionPerformed(ActionEvent event)
+	{
+	
+		if(checkAccount(accountNom) == true)
+		{
+		//NAME AND ADDRESS FROM THE ACCOUT NUM
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "password");
+			stmt = conn.createStatement();
+					
+
 			//get name and address
 			String getName = "SELECT * from account where AcNo = " + accountNom.getText(); 
 //			String sqlUpdate = "insert into training values(8, 'Moo', 2)";
 //			String sqlAlter = "update training set Name='Man' where Id = 3";
 //			stmt.executeUpdate(getName);
 //			stmt.executeUpdate(sqlAlter);
-			
 			ResultSet rs = stmt.executeQuery(getName);
+			
 			while(rs.next())
 			{
+				
 				int id = rs.getInt(1);
+				
 				String name2 = rs.getString(2);
 				String address2 = rs.getString(3);
 				System.out.println("AcNo: " + id);
@@ -97,8 +140,7 @@ public class DepositPageEvent implements ActionListener{
 			String bal = String.valueOf(balan);
 			balance.setText(bal);
 			
-			
-			
+						
 			//When clicking the button it will deposit the money
 			DepositMoney money = new DepositMoney(enterAmount, accountNom, balance);
 			enterAmountOk.addActionListener(money);
@@ -106,9 +148,36 @@ public class DepositPageEvent implements ActionListener{
 			rs.close();
 			stmt.close();
 			conn.close();
-		}catch(Exception se) {}
+		}catch(Exception se) {}}
+		
+		else
+		{
+//			accountNom.setText("NO AcNo");
+//			accountNom.setFont(new Font("red", Font.ITALIC, 8));
+//			accountNom.setForeground(Color.red);
+			
+			error = new Frame("Needs More Info");
+			error.setSize(200, 200);
+			Button ok = new Button("OK"); 
+			Label errorMessage = new Label(erMessage);
+			error.add(ok, BorderLayout.SOUTH);
+			error.add(errorMessage, BorderLayout.CENTER);
+			
+			erMessage = "NO ACCOUNT NUMBER EXISTS";
+				errorMessage.setText(erMessage);
+				error.setVisible(true);
+				ok.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent tee)
+					{
+						error.setVisible(false);
+					}
+				});}
+			
+			System.out.println("NO ACCOUNT NUMBER EXISTS");
+		}
 		
 
 		
-	}	
+		
 }

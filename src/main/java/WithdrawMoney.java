@@ -45,7 +45,7 @@ public class WithdrawMoney implements ActionListener {
 			if(money <= Integer.parseInt(balance.getText()))
 			{
 			
-			String putWith = "insert into withdraws values("+ acc + ", " + money +", '24/03/2018')"; 
+			String putWith = "insert into withdraws values("+ acc + ", " + money +", CURDATE())"; 
 			stmt.executeUpdate(putWith);
 			
 			

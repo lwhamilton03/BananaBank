@@ -70,7 +70,7 @@ public class DepositPage implements ActionListener {
 		acc.add(account);
 		
 		TextField retu = new TextField();
-		retu.setBackground(Color.RED);
+		retu.setBackground(Color.blue);
 		acc.add(retu);
 		
 		Label ac = new Label("Enter Deposit Amount: "); 

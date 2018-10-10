@@ -22,10 +22,42 @@ public class DepositMoney implements ActionListener{
 		balance = bal;
 	}
 	
+	public boolean checkAccount(TextField accountNo)
+	{
+		boolean result = false;
+		int check = Integer.parseInt(accountNo.getText());
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "password");
+			stmt = conn.createStatement();
+			
+			String getAccount = "SELECT * from account";
+			ResultSet ra = stmt.executeQuery(getAccount); 
+			
+			while(ra.next())
+			{
+				int idd = ra.getInt(1);
+				if(check == idd)
+				{
+					result = true;
+				}
+			}
+			
+			stmt.close();
+			conn.close();
+			
+		}catch(Exception se) {}
+				
+		return result;
+	}
+	
 	public void actionPerformed(ActionEvent ok)
 	{
 		System.out.println("clicked");
 		String moneyDeposit = submit.getText();
+			
 		
 		//NAME AND ADDRESS FROM THE ACCOUT NUM
 		try {
@@ -39,7 +71,7 @@ public class DepositMoney implements ActionListener{
 			int acc = Integer.parseInt(accountNo.getText());
 			System.out.println(accountNo.getText());
 			System.out.println(money);
-			String putDeposit = "insert into deposit values("+ acc + ", " + money +", '24/03/2018')"; 
+			String putDeposit = "insert into deposit values("+ acc + ", " + money +", CURDATE())"; 
 
 			
 			stmt.executeUpdate(putDeposit);

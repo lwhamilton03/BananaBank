@@ -1,4 +1,7 @@
+import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Frame;
+import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +23,8 @@ public class WithdrawPageEvent implements ActionListener{
 	TextField balance; 
 	TextField enterAmount; 
 	Button enterAmountOk; 
+	Frame error;
+	String erMessage = "";
 	
 	public WithdrawPageEvent(TextField account,TextField nom, TextField add,TextField bal, 
 	TextField enter,Button ent)
@@ -32,9 +37,41 @@ public class WithdrawPageEvent implements ActionListener{
 		enterAmountOk = ent;
 	}
 	
+	public boolean checkAccount(TextField accountNo)
+	{
+		boolean result = false;
+		int check = Integer.parseInt(accountNo.getText());
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "password");
+			stmt = conn.createStatement();
+			
+			String getAccount = "SELECT * from account";
+			ResultSet ra = stmt.executeQuery(getAccount); 
+			
+			while(ra.next())
+			{
+				int idd = ra.getInt(1);
+				if(check == idd)
+				{
+					result = true;
+				}
+			}
+			
+			stmt.close();
+			conn.close();
+			
+		}catch(Exception se) {}
+				
+		return result;
+	}
+	
 	public void actionPerformed(ActionEvent event)
 	{
-	
+		if(checkAccount(accountNom) == true)
+		{
 		//NAME AND ADDRESS FROM THE ACCOUT NUM
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -105,8 +142,27 @@ public class WithdrawPageEvent implements ActionListener{
 			stmt.close();
 			conn.close();
 		}catch(Exception se) {}
-		
-
+	}
+		else
+		{
+			error = new Frame("Needs More Info");
+			error.setSize(200, 200);
+			Button ok = new Button("OK"); 
+			Label errorMessage = new Label(erMessage);
+			error.add(ok, BorderLayout.SOUTH);
+			error.add(errorMessage, BorderLayout.CENTER);
+			
+			erMessage = "NO ACCOUNT NUMBER EXISTS";
+				errorMessage.setText(erMessage);
+				error.setVisible(true);
+				ok.addActionListener(new ActionListener() 
+				{
+					public void actionPerformed(ActionEvent tee)
+					{
+						error.setVisible(false);
+					}
+				});}
+			System.out.println("NO ACCOUNT NUMBER EXISTS");
 		
 	}	
 }
