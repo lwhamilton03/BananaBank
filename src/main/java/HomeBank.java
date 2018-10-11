@@ -27,7 +27,7 @@ public class HomeBank {
 		
 		Panel homePage = new Panel(); 
 		homePage.setVisible(true);
-		GridLayout grid = new GridLayout(4,1);
+		GridLayout grid = new GridLayout(5,1);
 		homePage.setLayout(grid);
 		F.add(homePage, BorderLayout.CENTER); 
 			
@@ -40,6 +40,8 @@ public class HomeBank {
 		withdrawMoney.setBackground(Color.lightGray); 
 		Button exit = new Button("EXIT"); 
 		exit.setBackground(Color.GRAY);
+		Button bankBalance = new Button("Bank Balance"); 
+		bankBalance.setBackground(Color.lightGray);
 		exit.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent eee)
@@ -53,8 +55,8 @@ public class HomeBank {
 		homePage.add(createAccount);
 		homePage.add(depositeMoney);
 		homePage.add(withdrawMoney);
+		homePage.add(bankBalance);
 		homePage.add(exit);
-		
 		
 		
 		
@@ -66,5 +68,9 @@ public class HomeBank {
 		
 		WithdrawPage with = new WithdrawPage(F); 
 		withdrawMoney.addActionListener(with);
+		
+		BankStatementPage bal = new BankStatementPage(F);
+		bankBalance.addActionListener(bal);
+		
 	}
 }

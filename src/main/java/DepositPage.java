@@ -36,7 +36,7 @@ public class DepositPage implements ActionListener {
 		p.add(accountN);
 		
 		//NEEDS TO CHANGE BY IMPLEMENTING IT ELSE WHERE
-		final TextField input = new TextField();
+		TextField input = new TextField();
 		p.add(input);
 		input.setColumns(9);
 		
